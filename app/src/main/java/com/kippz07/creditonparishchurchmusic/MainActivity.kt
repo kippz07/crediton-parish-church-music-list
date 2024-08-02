@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,12 @@ import com.kippz07.creditonparishchurchmusic.model.ServiceNew
 import com.kippz07.creditonparishchurchmusic.utils.fetchData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+
+// todo: don't show past music
+// todo: have placeholder when no music
+// todo: have option to view past music
+// todo: use fragments instead of activities
+// todo: reformat date
 
 class MainActivity : AppCompatActivity() {
     lateinit var resource: String
@@ -38,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.button_refresh)
             .setOnClickListener {
                 if (!refreshDisabled) {
-//                    Toast.makeText(applicationContext, "Refresh disabled", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "Updating music list", Toast.LENGTH_SHORT).show()
                     refreshDisabled = true
                     lifecycleScope.launch(Dispatchers.Main) {
                         resource = fetchData()
@@ -64,9 +71,21 @@ class MainActivity : AppCompatActivity() {
 
     private suspend fun displayData() {
         val serviceRecyclerView = findViewById<RecyclerView>(R.id.main_recycler_view)
+        val emptyServiceView = findViewById<TextView>(R.id.empty_service_list_view)
+//        val serviceList = DatabaseBuilder.getInstance(applicationContext).ServiceDao().getAllFuture()
         val serviceList = DatabaseBuilder.getInstance(applicationContext).ServiceDao().getAll()
-        serviceRecyclerView.adapter = MainItemAdapter(this, serviceList)
-        serviceRecyclerView.setHasFixedSize(true)
+
+        if (serviceList.isNotEmpty()) {
+            serviceRecyclerView.adapter = MainItemAdapter(this, serviceList)
+            serviceRecyclerView.setHasFixedSize(true)
+            emptyServiceView.visibility = TextView.GONE
+            serviceRecyclerView.visibility = TextView.VISIBLE
+        }
+        else {
+            serviceRecyclerView.visibility = TextView.GONE
+            emptyServiceView.visibility = TextView.VISIBLE
+        }
+
     }
 
     private suspend fun addService(serviceList: List<Day>) {

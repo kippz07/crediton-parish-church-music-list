@@ -11,8 +11,8 @@ interface ServiceDao {
     @Query("SELECT * FROM ServiceEntity")
     suspend fun getAll(): List<ServiceEntity>
 
-//    @Query("SELECT * FROM ServiceEntity")
-//    suspend fun get(): List<ServiceEntity>
+    @Query("SELECT * FROM ServiceEntity WHERE date >= :date")
+    suspend fun getAllFuture(date: LocalDate = LocalDate.now()): List<ServiceEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(serviceEntity: ServiceEntity)

@@ -35,6 +35,16 @@
             android:scrollbars="vertical"
             app:layoutManager="LinearLayoutManager"/>
 
+        <TextView
+            android:id="@+id/empty_service_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/empty_service_list"
+            android:textSize="24sp"
+            android:visibility="gone"
+            android:layout_margin="16dp"
+            android:textAlignment="center"/>
+
 
     </LinearLayout>
 

@@ -14,6 +14,7 @@ import com.kippz07.creditonparishchurchmusic.ServiceActivity
 import com.kippz07.creditonparishchurchmusic.dao.ServiceEntity
 import com.kippz07.creditonparishchurchmusic.model.Day
 import com.kippz07.creditonparishchurchmusic.model.Piece
+import java.time.format.DateTimeFormatter
 
 
 class MainItemAdapter(private val context: Context, private val dataset: List<ServiceEntity>) : RecyclerView.Adapter<MainItemAdapter.ItemViewHolder>() {
@@ -32,7 +33,8 @@ class MainItemAdapter(private val context: Context, private val dataset: List<Se
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
-        holder.serviceDateTextView.text = item.date.toString()
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        holder.serviceDateTextView.text = item.date.format(formatter)
         holder.serviceTypeTextView.text = item.serviceType
         holder.mainItemTextView.setOnClickListener {
             val intent = Intent(context, ServiceActivity::class.java)

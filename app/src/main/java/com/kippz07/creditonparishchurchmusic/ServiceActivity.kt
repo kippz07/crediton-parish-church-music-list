@@ -14,6 +14,7 @@ import com.kippz07.creditonparishchurchmusic.model.Piece
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class ServiceActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +42,8 @@ class ServiceActivity : AppCompatActivity() {
         val serviceDate: TextView = findViewById<TextView>(R.id.service_date)
         val serviceType: TextView = findViewById<TextView>(R.id.service_type)
 
-        serviceDate.text = service.date.toString()
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+        serviceDate.text = service.date.format(formatter)
         serviceType.text = service.serviceType
     }
 

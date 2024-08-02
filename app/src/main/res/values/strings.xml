@@ -10,4 +10,5 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="refresh">Refresh</string>
+    <string name="empty_service_list">Oops, the music spreadsheet hasn\'t been updated!</string>
 </resources>
